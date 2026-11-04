@@ -29,7 +29,7 @@
 
 import * as rclnodejs from "rclnodejs";
 import { GeoPoint, VesselPosition, Pose } from "./geometry";
-import { quaternionToGpsHeading } from "../utils";
+import { bearingToEnuYawRad, quaternionToGpsHeading } from "../utils";
 
 // ─── ROS Message Types ───────────────────────────────────────
 
@@ -417,7 +417,7 @@ export class ROSInstances {
         rosCmd.geo_point.longitude = cmd.geoPoint.longitude;
         rosCmd.geo_point.altitude = cmd.geoPoint.altitude;
       }
-      if (cmd.heading !== undefined) rosCmd.heading = cmd.heading;
+      if (cmd.heading !== undefined) rosCmd.heading = bearingToEnuYawRad(cmd.heading);
       goal.cmd.push(rosCmd);
     }
 
@@ -446,7 +446,7 @@ export class ROSInstances {
       goal.cmd.geo_point.latitude = cmd.geoPoint.latitude;
       goal.cmd.geo_point.altitude = cmd.geoPoint.altitude;
     }
-    if (cmd.heading !== undefined) goal.cmd.heading = cmd.heading;
+    if (cmd.heading !== undefined) goal.cmd.heading = bearingToEnuYawRad(cmd.heading);
     try {
       return (await this.#instanceMap.get(instance)?.sendMASCmd(goal)) ?? false;
     } catch (err) {
