@@ -24,7 +24,7 @@
  */
 
 import WebSocket from "ws";
-import { rosInstances } from "./ros";
+import { rosInstances, DiagnosticLog } from "./ros";
 import { GeoPoint } from "./geometry";
 import http from "http";
 
