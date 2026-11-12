@@ -481,7 +481,6 @@ export class ROSInstances {
   }
 
   #diagnosticsCB(msg: DiagnosticArray): void {
-    console.log(typeof msg.status[0]?.level, msg.status[0]?.level);
     if (!this.#logCallback || !Array.isArray(msg?.status)) return;
 
     for (const status of msg.status) {
